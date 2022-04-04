@@ -8,7 +8,7 @@ import { ethers } from 'ethers';
 const type = localStorage.getItem('connection');
 
 export const [metamask, metamaskHooks] = initializeConnector<MetaMask>(
-  (actions) => new MetaMask(actions, type === 'metamask'),
+  (actions) => new MetaMask(actions, type === 'metamask', { silent: true }),
   [CHAIN_ID],
 );
 
@@ -19,21 +19,24 @@ const rpc: Record<number, string | string[]> = _.chain(CHAINS)
   .mapValues('rpcUrls')
   .value();
 
-export const [walletconnect, walletconnectHooks] = initializeConnector<WalletConnect>(
-  (actions) =>
-    new WalletConnect(
-      actions,
-      {
-        rpc,
-        qrcodeModalOptions: {
-          desktopLinks: [],
-          mobileLinks: [],
+export const [walletconnect, walletconnectHooks] =
+  initializeConnector<WalletConnect>(
+    (actions) =>
+      new WalletConnect(
+        actions,
+        {
+          rpc,
+          qrcodeModalOptions: {
+            desktopLinks: [],
+            mobileLinks: [],
+          },
         },
-      },
-      type === 'walletconnect',
-    ),
-  _.map(CHAINS, 'chainId'),
+        type === 'walletconnect',
+      ),
+    _.map(CHAINS, 'chainId'),
+  );
+console.log(ethers.providers,22)
+export const fallbackProvider = new ethers.providers.JsonRpcProvider(
+  rpc[CHAIN_ID][0],
+  CHAIN_ID,
 );
-
-// TODO: make this modular
-export const fallbackProvider = new ethers.providers.JsonRpcProvider(rpc[CHAIN_ID][0], CHAIN_ID);

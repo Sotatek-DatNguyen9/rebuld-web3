@@ -1,12 +1,13 @@
 import { BigNumber } from 'ethers';
 import { useEffect } from 'react';
 import { useAsyncRetry } from 'react-use';
-import { useAppWeb3 } from './useAppWeb3';
-import { AddressOrERC20, useERC20Contract } from './useContract';
-import BN from 'bignumber.js';
+import { useAppWeb3 } from '../use-app-web3';
+import { AddressOrERC20, useERC20Contract } from './use-contract';
+import { BN } from 'src/utils/helpers';
+import { ERC20_PLASTIK_ADDRESS } from '../use-contract';
 
 // if native, pass undefined as parameter
-export const useBalance = (token?: AddressOrERC20) => {
+export const useBalance = (token: AddressOrERC20 = ERC20_PLASTIK_ADDRESS) => {
   const { provider, account } = useAppWeb3();
 
   const erc20 = useERC20Contract(token);
@@ -16,17 +17,22 @@ export const useBalance = (token?: AddressOrERC20) => {
     loading,
     retry: refresh,
   } = useAsyncRetry(async () => {
-    if (!account || !provider) return;
+    if (!account || !erc20 || !provider) return;
 
     let wei: BigNumber;
     let decimals = 18;
     if (!erc20) {
       wei = await provider.getBalance(account);
     } else {
-      [wei, decimals] = await Promise.all([erc20.balanceOf(account), erc20.decimals()]);
+      [wei, decimals] = await Promise.all([
+        erc20.balanceOf(account),
+        erc20.decimals(),
+      ]);
     }
 
-    const balance = new BN(wei.toString()).div(10 ** decimals);
+    // TODO: code below having a bug because of `wei - ether`
+    // units
+    const balance = wei.toString();
 
     return { balance, decimals };
   }, [account, provider, erc20]);

@@ -15,7 +15,9 @@ export function getAddChainParameters(
     return {
       ...chainInfo,
       // @ts-ignore
-      chainId: padded0x ? `0x${Number(chainInfo.chainId).toString(16)}` : chainId,
+      chainId: padded0x
+        ? `0x${Number(chainInfo.chainId).toString(16)}`
+        : chainId,
     };
   }
 
@@ -40,7 +42,7 @@ const BNB: AddEthereumChainParameter['nativeCurrency'] = {
 };
 
 const INFURA_KEY = process.env.REACT_APP_INFURA_KEY;
-
+console.log(process.env,1100)
 export const CHAINS: AddEthereumChainParameter[] = [
   // ETH
   {
@@ -64,13 +66,17 @@ export const CHAINS: AddEthereumChainParameter[] = [
   {
     chainId: 4,
     chainName: 'Rinkeby',
-    rpcUrls: _.compact([INFURA_KEY ? `https://rinkeby.infura.io/v3/${INFURA_KEY}` : undefined]),
+    rpcUrls: _.compact([
+      INFURA_KEY ? `https://rinkeby.infura.io/v3/${INFURA_KEY}` : undefined,
+    ]),
     nativeCurrency: ETH,
   },
   {
     chainId: 42,
     chainName: 'Kovan',
-    rpcUrls: _.compact([INFURA_KEY ? `https://kovan.infura.io/v3/${INFURA_KEY}` : undefined]),
+    rpcUrls: _.compact([
+      INFURA_KEY ? `https://kovan.infura.io/v3/${INFURA_KEY}` : undefined,
+    ]),
     nativeCurrency: ETH,
   },
 
@@ -80,14 +86,14 @@ export const CHAINS: AddEthereumChainParameter[] = [
     rpcUrls: ['https://bsc-dataseed.binance.org'],
     chainId: 56,
     nativeCurrency: BNB,
-    blockExplorerUrls: ['https://bscscan.com'],
+    blockExplorerUrls: ['https://testnet.bscscan.com'],
   },
   {
     chainName: 'BSC (Testnet)',
     rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
     chainId: 97,
     nativeCurrency: BNB,
-    blockExplorerUrls: ['https://testnet.bscscan.com'],
+    blockExplorerUrls: ['https://bscscan.com'],
   },
 
   // Polygon
@@ -95,7 +101,9 @@ export const CHAINS: AddEthereumChainParameter[] = [
     chainName: 'Polygon Mainnet',
     chainId: 137,
     rpcUrls: _.compact([
-      INFURA_KEY ? `https://polygon-mainnet.infura.io/v3/${INFURA_KEY}` : undefined,
+      INFURA_KEY
+        ? `https://polygon-mainnet.infura.io/v3/${INFURA_KEY}`
+        : undefined,
       'https://polygon-rpc.com',
     ]),
     nativeCurrency: MATIC,
@@ -104,7 +112,9 @@ export const CHAINS: AddEthereumChainParameter[] = [
   {
     chainId: 80001,
     rpcUrls: _.compact([
-      INFURA_KEY ? `https://polygon-mumbai.infura.io/v3/${INFURA_KEY}` : undefined,
+      // INFURA_KEY
+      //   ? `https://polygon-mumbai.infura.io/v3/${INFURA_KEY}`
+      //   : undefined,
       'https://rpc-mumbai.matic.today',
     ]),
     chainName: 'Polygon Mumbai',
@@ -113,4 +123,4 @@ export const CHAINS: AddEthereumChainParameter[] = [
   },
 ];
 
-export const CHAIN_ID = +(process.env.REACT_APP_CHAIN_ID || '97');
+export const CHAIN_ID = +process.env.REACT_APP_CHAIN_ID!;

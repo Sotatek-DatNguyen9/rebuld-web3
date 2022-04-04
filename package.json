@@ -3,39 +3,49 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@walletconnect/ethereum-provider": "^1.7.7",
+    "@apollo/client": "^3.5.10",
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
+    "@mui/material": "^5.5.1",
+    "@mui/styles": "^5.5.1",
+    "@reduxjs/toolkit": "^1.8.0",
+    "@walletconnect/ethereum-provider": "^1.7.5",
     "@web3-react/core": "^8.0.19-beta.0",
     "@web3-react/metamask": "^8.0.15-beta.0",
+    "@web3-react/network": "8.0.15-beta.0",
     "@web3-react/store": "^8.0.14-beta.0",
     "@web3-react/types": "^8.0.10-beta.0",
     "@web3-react/walletconnect": "8.0.23-beta.0",
-    "bignumber.js": "^9.0.2",
-    "ethers": "^5.6.2",
-    "lodash": "^4.17.21",
+    "axios": "^0.26.1",
+    "bignumber.js": "^9.0.1",
+    "clsx": "^1.1.1",
+    "coingecko-api": "^1.0.10",
+    "ethers": "^5.6.0",
+    "graphql": "^16.3.0",
+    "lodash": "^4.17.20",
+    "moment": "^2.29.1",
+    "notistack": "^2.0.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-hook-form": "^7.17.1",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-use": "^17.3.2",
-    "web-vitals": "^2.1.0"
-  },
-  "devDependencies": {
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^12.0.0",
-    "@testing-library/user-event": "^13.2.1",
-    "@types/jest": "^27.0.1",
-    "@types/lodash": "^4.14.181",
-    "@types/node": "^16.7.13",
-    "@types/react": "^17.0.20",
-    "@types/react-dom": "^17.0.9",
-    "ethereum-abi-types-generator": "^1.3.2",
-    "typescript": "^4.6.3"
+    "serve": "^13.0.2",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start:prod": "serve -s build",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "abi-types": "abi-types-generator --provider=ethers_v5"
+    "format": "prettier --config ./.prettierrc --write .",
+    "gen-types": "abi-types-generator --provider=ethers_v5"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -48,6 +58,20 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/react": "12.1.2",
+    "@types/coingecko-api": "^1.0.10",
+    "@types/lodash": "^4.14.180",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^17.0.21",
+    "@types/qs": "^6.9.7",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.13",
+    "@types/react-router-dom": "^5.1.7",
+    "ethereum-abi-types-generator": "^1.3.2",
+    "prettier": "^2.3.2",
+    "typescript": "^4.6.2"
   },
   "resolutions": {
     "//": "See https://github.com/facebook/create-react-app/issues/11773",

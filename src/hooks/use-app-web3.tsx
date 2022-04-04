@@ -1,4 +1,10 @@
-import React, { createContext, useCallback, useContext, useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+} from 'react';
 import {
   getAddChainParameters,
   metamask,
@@ -6,7 +12,7 @@ import {
   walletconnect,
   walletconnectHooks,
   CHAIN_ID,
-} from 'src/utils/web3';
+} from 'src/blockchain';
 import type { Connector } from '@web3-react/types';
 import { getPriorityConnector } from '@web3-react/core';
 import { MetaMask } from '@web3-react/metamask';
@@ -52,14 +58,16 @@ const {
   usePriorityAccount,
   usePriorityChainId,
   usePriorityError,
-} = getPriorityConnector([metamask, metamaskHooks], [walletconnect, walletconnectHooks]);
+} = getPriorityConnector(
+  [metamask, metamaskHooks],
+  [walletconnect, walletconnectHooks],
+);
 
 export const AppWeb3Provider: React.FC = ({ children }) => {
-  const [connection, setConnection, removeConnection] = useLocalStorage<SupportedConnection>(
-    'connection',
-    undefined,
-    { raw: true },
-  );
+  const [connection, setConnection, removeConnection] =
+    useLocalStorage<SupportedConnection>('connection', undefined, {
+      raw: true,
+    });
 
   const chainId = usePriorityChainId?.();
   const connector = usePriorityConnector?.();
@@ -168,7 +176,8 @@ export const AppWeb3Provider: React.FC = ({ children }) => {
 
   const changeNetwork = useCallback<IAppWeb3Context['changeNetwork']>(
     async (nextChainId) => {
-      const conn = connection && _.get(ConnectionMappings, [connection], undefined);
+      const conn =
+        connection && _.get(ConnectionMappings, [connection], undefined);
 
       if (!conn || !nextChainId) return;
 
